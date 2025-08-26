@@ -231,7 +231,7 @@ const Login = () => {
 
   return (
     <div className="flex w-full justify-center items-center p-5 md:p-[70px] bg-[#F0F2F4] h-screen">
-      <div className="h-full w-1/2 flex bg-[#ffff] rounded-md">
+      <div className="h-full md:w-1/2 flex bg-[#ffff] rounded-md">
         {/* Image Section */}
         {/* <div className="hidden lg:flex w-1/2 justify-center items-center border-r border-gray-200">
           <img
