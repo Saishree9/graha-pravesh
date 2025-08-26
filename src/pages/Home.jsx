@@ -3,10 +3,30 @@ import { Heart, Eye } from "lucide-react";
 
 const Home = () => {
   const products = [
-    { id: 1, name: "Handcrafted Lamp", price: "₹3,499", img: "https://picsum.photos/500/500?random=11" },
-    { id: 2, name: "Luxury Wooden Mandir", price: "₹15,999", img: "https://picsum.photos/500/500?random=12" },
-    { id: 3, name: "Pure Brass Diya Set", price: "₹2,499", img: "https://picsum.photos/500/500?random=13" },
-    { id: 4, name: "Designer Wall Hanging", price: "₹1,999", img: "https://picsum.photos/500/500?random=14" },
+    {
+      id: 1,
+      name: "Handcrafted Lamp",
+      price: "₹3,499",
+      img: "https://picsum.photos/500/500?random=11",
+    },
+    {
+      id: 2,
+      name: "Luxury Wooden Mandir",
+      price: "₹15,999",
+      img: "https://picsum.photos/500/500?random=12",
+    },
+    {
+      id: 3,
+      name: "Pure Brass Diya Set",
+      price: "₹2,499",
+      img: "https://picsum.photos/500/500?random=13",
+    },
+    {
+      id: 4,
+      name: "Designer Wall Hanging",
+      price: "₹1,999",
+      img: "https://picsum.photos/500/500?random=14",
+    },
   ];
 
   return (
@@ -31,12 +51,14 @@ const Home = () => {
           <button className="mt-8 px-10 py-3 rounded-full bg-gradient-to-r from-amber-500 to-yellow-600 text-lg font-medium shadow-xl hover:scale-105 transition-transform">
             Explore Collection
           </button>
-          <p className="mt-3 text-sm opacity-80">✨ Free Shipping on orders above ₹999</p>
+          <p className="mt-3 text-sm opacity-80">
+            ✨ Free Shipping on orders above ₹999
+          </p>
         </div>
       </div>
 
       {/* Categories Section */}
-      <section className="py-16 max-w-6xl mx-auto px-6">
+      <section className="py-10 max-w-6xl mx-auto px-6">
         <h2 className="text-3xl font-bold text-center mb-10 text-gray-800">
           Shop by Category
         </h2>
@@ -44,7 +66,7 @@ const Home = () => {
           {["Lamps", "Mandirs", "Diyas", "Wall Décor"].map((cat, i) => (
             <div
               key={i}
-              className="relative group h-24 md:h-48 rounded-2xl overflow-hidden shadow-md cursor-pointer"
+              className="relative group h-36 md:h-48 rounded-md overflow-hidden shadow-md cursor-pointer"
             >
               <img
                 src={`https://picsum.photos/400/400?random=${20 + i}`}
@@ -60,39 +82,55 @@ const Home = () => {
       </section>
 
       {/* Products Section */}
-      <section className="px-8 py-20 max-w-7xl mx-auto">
+      <section className="px-8 py-10 max-w-7xl mx-auto">
         <h2 className="text-4xl font-bold text-center mb-12 text-gray-800">
           Featured Collection
         </h2>
-        <div className="grid gap-10 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
+        <div className="grid grid-cols-2 gap-4 sm:gap-6 md:grid-cols-3 lg:grid-cols-4">
           {products.map((p) => (
             <div
               key={p.id}
-              className="group relative rounded-2xl overflow-hidden shadow-lg hover:shadow-2xl transition-shadow duration-300 bg-white"
+              className="group relative rounded-md overflow-hidden shadow-md hover:shadow-2xl transition-shadow duration-300 bg-white"
             >
+              {/* Image */}
               <img
                 src={p.img}
                 alt={p.name}
-                className="w-full h-72 object-cover group-hover:scale-110 transition-transform duration-500"
+                className=" w-full h-36 sm:h-44 md:h-56 lg:h-72 object-cover group-hover:scale-105 transition-transform duration-500"
               />
 
-              {/* Hover Overlay */}
-              <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/30 to-transparent opacity-0 group-hover:opacity-100 transition">
-                <div className="absolute top-4 right-4 flex space-x-3">
-                  <button className="p-2 bg-white/80 rounded-full hover:bg-amber-500 hover:text-white transition">
-                    <Heart size={18} />
-                  </button>
-                  <button className="p-2 bg-white/80 rounded-full hover:bg-amber-500 hover:text-white transition">
-                    <Eye size={18} />
-                  </button>
-                </div>
-                <div className="absolute bottom-5 left-5 text-white">
-                  <h3 className="text-xl font-semibold">{p.name}</h3>
-                  <p className="mt-1 text-amber-300 font-medium">{p.price}</p>
-                </div>
-                <button className="absolute bottom-5 right-5 px-4 py-2 rounded-full bg-amber-500 text-white text-sm font-medium shadow hover:bg-amber-600 transition">
+              {/* MOBILE/TABLET VIEW – info always visible */}
+              <div className="lg:hidden p-2 sm:p-4 bg-white">
+                <h3 className="text-sm sm:text-base font-semibold text-gray-800 truncate">
+                  {p.name}
+                </h3>
+                <p className="text-amber-600 font-medium text-xs sm:text-sm">
+                  {p.price}
+                </p>
+                <button className="mt-2 sm:mt-3 w-full py-1.5 sm:py-2 rounded-full bg-amber-500 text-white text-xs sm:text-sm font-medium shadow hover:bg-amber-600 transition">
                   Buy Now
                 </button>
+              </div>
+
+              {/* DESKTOP VIEW – hover overlay */}
+              <div className="hidden lg:block">
+                <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/30 to-transparent opacity-0 group-hover:opacity-100 transition">
+                  <div className="absolute top-4 right-4 flex space-x-3">
+                    <button className="p-2 bg-white/80 rounded-full hover:bg-amber-500 hover:text-white transition">
+                      <Heart size={18} />
+                    </button>
+                    <button className="p-2 bg-white/80 rounded-full hover:bg-amber-500 hover:text-white transition">
+                      <Eye size={18} />
+                    </button>
+                  </div>
+                  <div className="absolute bottom-5 left-5 text-white">
+                    <h3 className="text-xl font-semibold">{p.name}</h3>
+                    <p className="mt-1 text-amber-300 font-medium">{p.price}</p>
+                  </div>
+                  <button className="absolute bottom-5 right-5 px-4 py-2 rounded-full bg-amber-500 text-white text-sm font-medium shadow hover:bg-amber-600 transition">
+                    Buy Now
+                  </button>
+                </div>
               </div>
             </div>
           ))}
@@ -100,19 +138,33 @@ const Home = () => {
       </section>
 
       {/* Why Choose Us */}
-      <section className="py-16 bg-amber-50">
+      <section className="py-10 bg-amber-50">
         <div className="max-w-6xl mx-auto px-6 text-center">
           <h2 className="text-3xl font-bold mb-10 text-gray-800">
             Why Choose Graha Pravesh?
           </h2>
           <div className="grid md:grid-cols-3 gap-8">
             {[
-              { title: "Premium Quality", desc: "Handpicked luxury materials for timeless durability." },
-              { title: "Tradition Meets Modern", desc: "Blend of spiritual elegance with contemporary design." },
-              { title: "Trusted by Families", desc: "Serving homes with love and trust for generations." },
+              {
+                title: "Premium Quality",
+                desc: "Handpicked luxury materials for timeless durability.",
+              },
+              {
+                title: "Tradition Meets Modern",
+                desc: "Blend of spiritual elegance with contemporary design.",
+              },
+              {
+                title: "Trusted by Families",
+                desc: "Serving homes with love and trust for generations.",
+              },
             ].map((item, i) => (
-              <div key={i} className="p-6 bg-white rounded-xl shadow-md hover:shadow-lg transition">
-                <h3 className="text-xl font-semibold text-amber-600">{item.title}</h3>
+              <div
+                key={i}
+                className="p-6 bg-white rounded-xl shadow-md hover:shadow-lg transition"
+              >
+                <h3 className="text-xl font-semibold text-amber-600">
+                  {item.title}
+                </h3>
                 <p className="mt-3 text-gray-600">{item.desc}</p>
               </div>
             ))}
