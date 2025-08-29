@@ -1,5 +1,8 @@
-import React from "react";
+import React, { useState } from "react";
 import { Heart, Eye } from "lucide-react";
+import ProductModal from "../components/ProductModal";
+import { Link } from "react-router-dom";
+import ProductCard from "../components/ProductCard";
 
 const Home = () => {
   const products = [
@@ -8,24 +11,75 @@ const Home = () => {
       name: "Handcrafted Lamp",
       price: "₹3,499",
       img: "https://picsum.photos/500/500?random=11",
+      images: [
+        "https://picsum.photos/500/500?random=11",
+        "https://picsum.photos/500/500?random=21",
+        "https://picsum.photos/500/500?random=31",
+      ],
+      description:
+        "A beautifully handcrafted lamp made from eco-friendly materials. Perfect for adding warmth and style to your living room or bedroom.",
+      variants: [
+        { name: "Wood Finish", img: "https://picsum.photos/500/500?random=41" },
+        {
+          name: "Brass Finish",
+          img: "https://picsum.photos/500/500?random=42",
+        },
+      ],
     },
     {
       id: 2,
       name: "Luxury Wooden Mandir",
       price: "₹15,999",
       img: "https://picsum.photos/500/500?random=12",
+      images: [
+        "https://picsum.photos/500/500?random=12",
+        "https://picsum.photos/500/500?random=22",
+        "https://picsum.photos/500/500?random=32",
+      ],
+      description:
+        "Intricately carved wooden mandir with a luxurious finish, ideal for your puja room.",
+      variants: [
+        { name: "Teak Wood", img: "https://picsum.photos/500/500?random=43" },
+        { name: "Rosewood", img: "https://picsum.photos/500/500?random=44" },
+        { name: "Sandalwood", img: "https://picsum.photos/500/500?random=45" },
+      ],
     },
     {
       id: 3,
       name: "Pure Brass Diya Set",
       price: "₹2,499",
       img: "https://picsum.photos/500/500?random=13",
+      images: [
+        "https://picsum.photos/500/500?random=13",
+        "https://picsum.photos/500/500?random=23",
+        "https://picsum.photos/500/500?random=33",
+      ],
+      description:
+        "Traditional brass diya set that brings divine light and auspiciousness to every occasion.",
+      variants: [
+        { name: "Set of 2", img: "https://picsum.photos/500/500?random=46" },
+        { name: "Set of 4", img: "https://picsum.photos/500/500?random=47" },
+      ],
     },
     {
       id: 4,
       name: "Designer Wall Hanging",
       price: "₹1,999",
       img: "https://picsum.photos/500/500?random=14",
+      images: [
+        "https://picsum.photos/500/500?random=14",
+        "https://picsum.photos/500/500?random=24",
+        "https://picsum.photos/500/500?random=34",
+      ],
+      description:
+        "Elegant wall hanging made with premium fabric and intricate embroidery to elevate your home decor.",
+      variants: [
+        { name: "Red & Gold", img: "https://picsum.photos/500/500?random=48" },
+        {
+          name: "Blue & Silver",
+          img: "https://picsum.photos/500/500?random=49",
+        },
+      ],
     },
   ];
 
@@ -82,54 +136,56 @@ const Home = () => {
       </section>
 
       {/* Products Section */}
-      <section className="px-8 py-10 max-w-7xl mx-auto">
-        <h2 className="text-4xl font-bold text-center mb-12 text-gray-800">
+      <section className="px-6 sm:px-10 py-12 max-w-7xl mx-auto">
+        <h2 className="text-3xl sm:text-4xl font-extrabold text-center mb-12 text-gray-900 tracking-tight">
           Featured Collection
         </h2>
+
         <div className="grid grid-cols-2 gap-4 sm:gap-6 md:grid-cols-3 lg:grid-cols-4">
           {products.map((p) => (
             <div
               key={p.id}
-              className="group relative rounded-md overflow-hidden shadow-md hover:shadow-2xl transition-shadow duration-300 bg-white"
+              className="group relative bg-white rounded-xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300"
             >
-              {/* Image */}
-              <img
-                src={p.img}
-                alt={p.name}
-                className=" w-full h-36 sm:h-44 md:h-56 lg:h-72 object-cover group-hover:scale-105 transition-transform duration-500"
-              />
-
-              {/* MOBILE/TABLET VIEW – info always visible */}
-              <div className="lg:hidden p-2 sm:p-4 bg-white">
-                <h3 className="text-sm sm:text-base font-semibold text-gray-800 truncate">
-                  {p.name}
-                </h3>
-                <p className="text-amber-600 font-medium text-xs sm:text-sm">
-                  {p.price}
-                </p>
-                <button className="mt-2 sm:mt-3 w-full py-1.5 sm:py-2 rounded-full bg-amber-500 text-white text-xs sm:text-sm font-medium shadow hover:bg-amber-600 transition">
-                  Buy Now
-                </button>
+              {/* Product Image */}
+              <div className="hidden lg:flex overflow-hidden">
+                <img
+                  src={p.img}
+                  alt={p.name}
+                  className="w-full h-40 sm:h-52 md:h-64 lg:h-72 object-cover transform group-hover:scale-105 transition duration-500"
+                />
               </div>
 
-              {/* DESKTOP VIEW – hover overlay */}
-              <div className="hidden lg:block">
-                <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/30 to-transparent opacity-0 group-hover:opacity-100 transition">
-                  <div className="absolute top-4 right-4 flex space-x-3">
-                    <button className="p-2 bg-white/80 rounded-full hover:bg-amber-500 hover:text-white transition">
-                      <Heart size={18} />
-                    </button>
-                    <button className="p-2 bg-white/80 rounded-full hover:bg-amber-500 hover:text-white transition">
-                      <Eye size={18} />
-                    </button>
-                  </div>
-                  <div className="absolute bottom-5 left-5 text-white">
-                    <h3 className="text-xl font-semibold">{p.name}</h3>
-                    <p className="mt-1 text-amber-300 font-medium">{p.price}</p>
-                  </div>
-                  <button className="absolute bottom-5 right-5 px-4 py-2 rounded-full bg-amber-500 text-white text-sm font-medium shadow hover:bg-amber-600 transition">
-                    Buy Now
+              {/* MOBILE/TABLET INFO CARD */}
+              <div className="grid grid-cols-1 gap-5 sm:hidden">
+                {products.map((p) => (
+                  <ProductCard key={p.id} {...p} className="h-full" />
+                ))}
+              </div>
+
+              {/* DESKTOP HOVER OVERLAY */}
+              <div className="hidden lg:flex flex-col justify-between absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent opacity-0 group-hover:opacity-100 transition duration-300">
+                <div className="flex justify-end gap-2 p-4">
+                  <button className="p-2 bg-white/80 rounded-full hover:bg-amber-500 hover:text-white transition">
+                    <Heart size={18} />
                   </button>
+                  <Link
+                    to={`/product/${p.id}`}
+                    className="p-2 bg-white/80 rounded-full hover:bg-amber-500 hover:text-white transition"
+                  >
+                    <Eye size={18} />
+                  </Link>
+                </div>
+
+                <div className="p-5 text-white">
+                  <h3 className="text-lg font-semibold">{p.name}</h3>
+                  <p className="mt-1 text-amber-300 font-medium">{p.price}</p>
+                  <Link
+                    to={`/product/${p.id}`}
+                    className="mt-4 inline-block px-5 py-2 rounded-full bg-amber-500 text-white text-sm font-medium shadow hover:bg-amber-600 transition"
+                  >
+                    Buy Now
+                  </Link>
                 </div>
               </div>
             </div>

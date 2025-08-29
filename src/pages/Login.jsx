@@ -22,7 +22,6 @@ const Login = () => {
   const [showPhoneOtp, setShowPhoneOtp] = useState(false);
   const [phoneTimer, setPhoneTimer] = useState(0);
   const [otpPhoneNumber, setOtpPhoneNumber] = useState(["", "", "", ""]);
-  const [refferCode, setRefferCode] = useState(null);
   const [signUpForm, setSignUpForm] = useState(true);
   const [otpVerified, setOtpVerified] = useState(false);
 
@@ -230,270 +229,128 @@ const Login = () => {
   };
 
   return (
-    <div className="flex w-full justify-center items-center p-5 md:p-[70px] bg-[#F0F2F4] h-screen">
-      <div className="h-full md:w-1/2 flex bg-[#ffff] rounded-md">
-        {/* Image Section */}
-        {/* <div className="hidden lg:flex w-1/2 justify-center items-center border-r border-gray-200">
-          <img
-            src={loginImg}
-            alt="Signup illustration"
-            className="w-3/4 h-3/4 object-contain"
-          />
-        </div> */}
+   <div className="flex w-full justify-center items-center bg-[#F0F2F4] min-h-screen p-4 md:p-10">
+  <div className="flex w-full max-w-4xl bg-white shadow-xl rounded-2xl overflow-hidden">
+    
+    {/* Left Side Image (only on desktop) */}
+    <div className="hidden md:flex w-1/2 bg-gradient-to-br from-pink-100 via-white to-purple-100 justify-center items-center">
+      <img
+        // src={loginImg}
+        alt="Login Illustration"
+        className="w-3/4 max-h-[400px] object-contain"
+      />
+    </div>
 
-        <div className="w-full flex items-center justify-center p-8">
-          <div className="max-w-sm w-full">
-            {/* ❌ Logo removed here */}
-            <h2 className="md:text-3xl text-xl font-semibold text-gray-800 mb-6 text-left">
-              {signUpForm ? "Sign Up" : "Sign In"}
-            </h2>
+    {/* Form Section */}
+    <div className="w-full md:w-1/2 flex items-center justify-center p-8 md:p-12">
+      <div className="w-full max-w-sm">
+        <h2 className="text-2xl md:text-3xl font-bold text-gray-800 mb-6">
+          {signUpForm ? "Create Your Account" : "Welcome Back"}
+        </h2>
 
-            <form
-              className="space-y-4"
-              onSubmit={(e) => {
-                e.preventDefault();
-                handleSubmit(e);
-              }}
+        <form
+          className="space-y-5"
+          onSubmit={(e) => {
+            e.preventDefault();
+            handleSubmit(e);
+          }}
+          autoComplete="off"
+        >
+          {/* Email with OTP */}
+          <div className="relative">
+            <div className="absolute inset-y-0 left-3 flex items-center text-gray-600">
+              <FaUser className="w-5 h-5 text-amber-500" />
+            </div>
+            <input
+              type="email"
+              placeholder="Email Address"
+              value={email}
+              // onChange={handleEmailChange}
+              required
               autoComplete="off"
-            >
-              <>
-                <div className="relative space-y-2">
-                  <div>
-                    <div className="relative">
-                      <div className="absolute inset-y-0 left-3 flex items-center text-gray-600">
-                        {/* You can swap the icon if you like */}
-                        <FaUser className="w-5 h-5 text-[#D05278]" />
-                      </div>
-                      <input
-                        type="email"
-                        placeholder="Email Address"
-                        value={email}
-                        onChange={(e) => {
-                          const input = e.target.value;
-                          // Reset all states related to email verification
-                          if (
-                            emailVerified !== 0 ||
-                            otpVerified ||
-                            showEmailOtp ||
-                            emailDisabled
-                          ) {
-                            setEmailVerified(0);
-                            setOtpVerified(false);
-                            setOtpEmailNumber(["", "", "", ""]);
-                            setShowEmailOtp(false);
-                            setEmailTimer(0);
-                            setEmailError("");
-                            setEmailDisabled(false);
-                          }
-                          setEmail(input);
-                          setEmailError("");
-                        }}
-                        className="border border-gray-300 rounded-md w-full py-3 pl-10 pr-20 focus:outline-none focus:border-pPink"
-                        required
-                        autoComplete="off"
-                      />
-                      <div className="absolute right-3 top-1/2 transform -translate-y-1/2 flex items-center space-x-2">
-                        {emailVerified === 0 ? (
-                          <button
-                            type="button"
-                            onClick={() => handleTriggerEmail()}
-                            disabled={emailDisabled}
-                            className="text-[#D53936] font-semibold px-3 py-1 rounded-md text-sm"
-                          >
-                            {signUpForm ? "Verify" : "Get OTP"}
-                          </button>
-                        ) : emailVerified === 1 ? (
-                          <SecurityCheckIcon className="text-green-500" />
-                        ) : emailVerified === 2 ? (
-                          <MultiplicationSignIcon className="text-red-500" />
-                        ) : null}
-                      </div>
-                    </div>
-                    {emailError && (
-                      <p className="text-red-500 text-xs mt-1">{emailError}</p>
-                    )}
-                  </div>
-
-                  {(phoneVerified === 0 || phoneVerified === 2) &&
-                    showPhoneOtp && (
-                      <div>
-                        {showPhoneOtp && (
-                          <div>
-                            {phoneTimer > 0 ? (
-                              <p className="text-sm text-gray-500">
-                                Resend OTP after{" "}
-                                <span style={{ color: "red" }}>
-                                  {phoneTimer}
-                                </span>
-                              </p>
-                            ) : (
-                              <div className="w-full flex justify-end items-center my-2">
-                                <button
-                                  type="button"
-                                  onClick={() => handleTriggerPhoneDebounce()}
-                                  className="bg-[#D05278] text-white px-3 py-1 rounded-md text-sm"
-                                >
-                                  Resend
-                                </button>
-                              </div>
-                            )}
-
-                            <div className="w-full flex flex-col justify-center items-center mt-2">
-                              <p className="text-gray-800">Enter Phone OTP</p>
-                              <div>
-                                {/* {otpPhoneNumber.map((data, index) => (
-                                    <input
-                                      key={index}
-                                      type="tel"
-                                      inputMode="numeric"
-                                      pattern="[0-9]*"
-                                      id={`otpPhone-${index}`}
-                                      value={data}
-                                      onChange={(e) => {
-                                        const value = e.target.value;
-                                        if (/^\d?$/.test(value)) {
-                                          handleChangePhoneNumber(e, index);
-                                        }
-                                      }}
-                                      onKeyDown={(e) =>
-                                        handleKeyDownPhoneNumber(
-                                          e,
-                                          index,
-                                          otpPhoneNumber,
-                                          setOtpPhoneNumber,
-                                          "otpPhone"
-                                        )
-                                      }
-                                      className="border rounded-lg w-10 h-10 py-2 px-3 text-sm bg-transparent text-center text-gray-800 focus:outline-none focus:ring-2 focus:ring-[#5356FB] m-1"
-                                      maxLength={1}
-                                      autoComplete="one-time-code"
-                                    />
-                                  ))} */}
-                                {otpPhoneNumber.map((data, index) => (
-                                  <input
-                                    key={index}
-                                    type="tel"
-                                    inputMode="numeric"
-                                    pattern="[0-9]*"
-                                    id={`otpPhone-${index}`}
-                                    value={data}
-                                    onChange={(e) => {
-                                      const value = e.target.value;
-                                      if (/^\d?$/.test(value)) {
-                                        handleChangePhoneNumber(e, index);
-                                      }
-                                    }}
-                                    onKeyDown={(e) =>
-                                      handleKeyDownPhoneNumber(
-                                        e,
-                                        index,
-                                        otpPhoneNumber,
-                                        setOtpPhoneNumber,
-                                        "otpPhone"
-                                      )
-                                    }
-                                    onPaste={(e) => {
-                                      e.preventDefault();
-                                      const pasted = e.clipboardData
-                                        .getData("text")
-                                        .replace(/\D/g, "");
-                                      if (!pasted) return;
-                                      const newOtp = [...otpPhoneNumber];
-                                      pasted.split("").forEach((char, i) => {
-                                        if (i < newOtp.length) {
-                                          newOtp[i] = char;
-                                        }
-                                      });
-                                      setOtpPhoneNumber(newOtp);
-
-                                      if (
-                                        pasted.length >= otpPhoneNumber.length
-                                      ) {
-                                        verifyPhoneOtp({
-                                          phone,
-                                          otp: Number(newOtp.join("")),
-                                        });
-                                      }
-
-                                      const nextIndex =
-                                        pasted.length < otpPhoneNumber.length
-                                          ? pasted.length
-                                          : otpPhoneNumber.length - 1;
-                                      const nextInput = document.getElementById(
-                                        `otpPhone-${nextIndex}`
-                                      );
-                                      if (nextInput) nextInput.focus();
-                                    }}
-                                    className="border rounded-lg w-10 h-10 py-2 px-3 text-sm bg-transparent text-center text-gray-800 focus:outline-none focus:ring-2 focus:ring-[#5356FB] m-1"
-                                    maxLength={1}
-                                    autoComplete="one-time-code"
-                                  />
-                                ))}
-                              </div>
-                            </div>
-                          </div>
-                        )}
-                      </div>
-                    )}
-
-                  {showPhoneOtpLoader && (
-                    <p className="text-gray-500 mt-2">Loading...</p>
-                  )}
-                </div>
-              </>
-
-              {signUpForm && (
-                <>
-                  <div className="relative">
-                    <div className="absolute inset-y-0 left-3 flex items-center text-gray-600">
-                      <FaUser className="w-5 h-5 text-[#D05278]" />
-                    </div>
-                    <input
-                      type="text"
-                      placeholder="Full Name"
-                      onChange={(e) => setFirstName(e.target.value)}
-                      required
-                      autoComplete="off"
-                      className="border border-gray-300 rounded-md w-full py-3 pl-10 pr-4 focus:outline-none focus:border-pPink"
-                    />
-                  </div>
-
-                  {/* <div className="relative">
-                    <input
-                      className="border border-gray-300 rounded-md w-full py-3 pl-5 pr-20 focus:outline-none focus:border-pPink"
-                      type="text"
-                      placeholder="Enter Referral code"
-                      value={refferCode}
-                      required
-                      onChange={(e) => {
-                        const input = e.target.value
-                          .toUpperCase()
-                          .replace(/[^A-Z0-9]/g, "");
-                        setRefferCode(input);
-                      }}
-                      autoComplete="off"
-                    />
-                  </div> */}
-
-                  <button
-                    type="submit"
-                    disabled={!otpVerified}
-                    className={`w-full py-3 rounded-full font-semibold transition duration-200
-    ${
-      otpVerified
-        ? "bg-[#D05278] text-white hover:bg-[#b43f65]"
-        : "bg-gray-300 text-gray-500 cursor-not-allowed"
-    }`}
-                  >
-                    Submit
-                  </button>
-                </>
-              )}
-            </form>
+              className="border border-gray-300 rounded-lg w-full py-3 pl-10 pr-24 focus:outline-none focus:border-amber-500 transition"
+            />
+            <div className="absolute right-3 top-1/2 -translate-y-1/2">
+              {emailVerified === 0 ? (
+                <button
+                  type="button"
+                  // onClick={handleTriggerEmail}
+                  disabled={emailDisabled}
+                  className="text-amber-500 font-medium px-3 py-1 rounded-md text-sm hover:bg-pink-50"
+                >
+                  {signUpForm ? "Verify" : "Get OTP"}
+                </button>
+              ) : emailVerified === 1 ? (
+                <SecurityCheckIcon className="text-green-500" />
+              ) : emailVerified === 2 ? (
+                <MultiplicationSignIcon className="text-red-500" />
+              ) : null}
+            </div>
           </div>
-        </div>
+          {emailError && <p className="text-red-500 text-xs mt-1">{emailError}</p>}
+
+          {/* Phone OTP if required */}
+          {showPhoneOtp && (
+            <div className="mt-4">
+              <p className="text-gray-700 text-sm mb-2">Enter Phone OTP</p>
+              <div className="flex justify-center gap-2">
+                {otpPhoneNumber.map((data, index) => (
+                  <input
+                    key={index}
+                    type="tel"
+                    inputMode="numeric"
+                    pattern="[0-9]*"
+                    value={data}
+                    onChange={(e) => handleChangePhoneNumber(e, index)}
+                    onKeyDown={(e) =>
+                      handleKeyDownPhoneNumber(e, index, otpPhoneNumber, setOtpPhoneNumber, "otpPhone")
+                    }
+                    maxLength={1}
+                    className="border rounded-lg w-12 h-12 text-center text-lg font-medium focus:ring-2 focus:ring-amber-500 outline-none"
+                  />
+                ))}
+              </div>
+            </div>
+          )}
+
+          {/* Name field only in SignUp */}
+          {signUpForm && (
+            <div className="relative">
+              <div className="absolute inset-y-0 left-3 flex items-center text-gray-600">
+                <FaUser className="w-5 h-5 text-amber-500" />
+              </div>
+              <input
+                type="text"
+                placeholder="Full Name"
+                onChange={(e) => setFirstName(e.target.value)}
+                required
+                autoComplete="off"
+                className="border border-gray-300 rounded-lg w-full py-3 pl-10 pr-4 focus:outline-none focus:border-amber-500"
+              />
+            </div>
+          )}
+
+          {/* Submit Button */}
+          <button
+            type="submit"
+            disabled={signUpForm && !otpVerified}
+            className={`
+              mt-8 px-10 py-3 rounded-full text-lg font-medium shadow-xl hover:scale-105 transition-transform
+
+              w-full  fduration-200 ${
+              !signUpForm || otpVerified
+                ? "bg-gradient-to-r from-amber-500 to-yellow-600 text-white"
+                : "bg-gray-300 text-gray-500 cursor-not-allowed"
+            }`}
+          >
+            {signUpForm ? "Sign Up" : "Sign In"}
+          </button>
+        </form>
       </div>
     </div>
+  </div>
+</div>
+
   );
 };
 
