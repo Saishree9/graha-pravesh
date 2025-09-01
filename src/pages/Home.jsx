@@ -141,7 +141,7 @@ const Home = () => {
           Featured Collection
         </h2>
 
-        <div className="grid grid-cols-2 gap-4 sm:gap-6 md:grid-cols-3 lg:grid-cols-4">
+        <div className="hidden sm:grid grid-cols-2 gap-4 sm:gap-6 md:grid-cols-3 lg:grid-cols-4">
           {products.map((p) => (
             <div
               key={p.id}
@@ -154,13 +154,6 @@ const Home = () => {
                   alt={p.name}
                   className="w-full h-40 sm:h-52 md:h-64 lg:h-72 object-cover transform group-hover:scale-105 transition duration-500"
                 />
-              </div>
-
-              {/* MOBILE/TABLET INFO CARD */}
-              <div className="grid grid-cols-1 gap-5 sm:hidden">
-                {products.map((p) => (
-                  <ProductCard key={p.id} {...p} className="h-full" />
-                ))}
               </div>
 
               {/* DESKTOP HOVER OVERLAY */}
@@ -189,6 +182,12 @@ const Home = () => {
                 </div>
               </div>
             </div>
+          ))}
+        </div>
+        {/* MOBILE/TABLET INFO CARD */}
+        <div className="grid grid-cols-2 gap-5 sm:hidden">
+          {products.map((p) => (
+            <ProductCard key={p.id} {...p} className="h-full" />
           ))}
         </div>
       </section>

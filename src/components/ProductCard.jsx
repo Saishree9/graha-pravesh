@@ -30,7 +30,7 @@ const ProductCard = ({
         </p>
 
         {/* Small Image Previews */}
-        <div className="flex gap-2 mt-3">
+        {/* <div className="flex gap-2 mt-3">
           {images?.slice(0, 3).map((img, i) => (
             <img
               key={i}
@@ -39,7 +39,7 @@ const ProductCard = ({
               className="w-10 h-10 object-cover rounded border"
             />
           ))}
-        </div>
+        </div> */}
 
         {/* Actions */}
         <div className="flex gap-2 mt-3">
