@@ -4,6 +4,8 @@ import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
 import Home from "./pages/Home";
 import ProductDetails from "./pages/ProductDetails";
+import Cart from "./pages/Cart";
+import Wishlist from "./pages/Wishlist";
 
 function App() {
   const location = useLocation();
@@ -18,6 +20,8 @@ function App() {
     <Routes>
       <Route path="/signin" element={<Login />} />
       <Route path="/" element={<Home />} />
+      <Route path="/cart" element={<Cart />} />
+      <Route path="/wishlist" element={<Wishlist />} />
       <Route path="/product/:id" element={<ProductDetails />} />
     </Routes>
   </main>

@@ -15,7 +15,7 @@ const Navbar = () => {
         {/* Brand */}
         <Link
           to="/"
-          className="text-2xl font-extrabold bg-gradient-to-r from-amber-600 to-yellow-500 bg-clip-text text-transparent tracking-tight"
+          className="text-sm md:text-2xl uppercase font-extrabold bg-gradient-to-r from-amber-600 to-yellow-500 bg-clip-text text-transparent tracking-tight"
         >
           Graha Pravesh
         </Link>
